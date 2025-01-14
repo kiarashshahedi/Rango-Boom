@@ -1,13 +1,13 @@
-from django.shortcuts import render
 from rest_framework import viewsets, filters
+from django_filters.rest_framework import DjangoFilterBackend
 from .models import Product, Category
 from .serializers import ProductSerializer, CategorySerializer
-from django_filters.rest_framework import DjangoFilterBackend
 
 
 class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Category.objects.all().order_by('name')
+    queryset = Category.objects.filter(parent_category__isnull=True)  # Only parent categories
     serializer_class = CategorySerializer
+
 
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all().order_by('-created_at')

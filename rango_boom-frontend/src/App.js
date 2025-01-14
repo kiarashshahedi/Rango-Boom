@@ -1,5 +1,5 @@
 import React from 'react';
-import Products from './components/Products'; // Adjust path if needed
+import Products from './components/Products'; // Adjust the path if necessary
 
 function App() {
     return (

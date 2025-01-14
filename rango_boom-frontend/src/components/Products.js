@@ -5,9 +5,9 @@ import CategoryFilter from './CategoryFilter';
 const Products = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [selectedCategory, setSelectedCategory] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState(null);
 
-    const fetchProducts = (category = '') => {
+    const fetchProducts = (category = null) => {
         setLoading(true);
         let url = 'http://127.0.0.1:8000/api/products/';
         if (category) {
@@ -46,6 +46,7 @@ const Products = () => {
                             <img
                                 src={`http://127.0.0.1:8000${product.image}`}
                                 alt={product.name}
+                                className="product-image"
                             />
                             <h2>{product.name}</h2>
                             <p>{product.description}</p>

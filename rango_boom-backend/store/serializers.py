@@ -1,21 +1,21 @@
 from rest_framework import serializers
 from .models import Product, Category
 
+
 class CategorySerializer(serializers.ModelSerializer):
     children = serializers.SerializerMethodField()
 
     class Meta:
         model = Category
-        fields = ['id', 'name', 'parent_category', 'children']
+        fields = ['id', 'name', 'parent_category', 'icon', 'children']
 
     def get_children(self, obj):
-        children = Category.objects.filter(parent_category=obj.name)
+        children = obj.children.all()  # Get child categories
         return CategorySerializer(children, many=True).data
 
 
-        
 class ProductSerializer(serializers.ModelSerializer):
-    category = CategorySerializer()  # Nested category details
+    category = CategorySerializer(read_only=True)
 
     class Meta:
         model = Product

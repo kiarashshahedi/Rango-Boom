@@ -23,6 +23,13 @@ const CategoryFilter = ({ onCategorySelect }) => {
                     onClick={() => onCategorySelect(category.id)}
                     className="category-item"
                 >
+                    {category.icon && (
+                        <img
+                            src={`http://127.0.0.1:8000${category.icon}`}
+                            alt={category.name}
+                            className="category-icon"
+                        />
+                    )}
                     {category.name}
                 </div>
                 {category.children && category.children.length > 0 && (
