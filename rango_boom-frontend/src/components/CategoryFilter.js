@@ -25,9 +25,10 @@ const CategoryFilter = ({ onCategorySelect }) => {
                 >
                     {category.icon && (
                         <img
-                            src={`http://127.0.0.1:8000${category.icon}`}
+                            src={category.icon}
                             alt={category.name}
                             className="category-icon"
+                            style={{ width: '20px', marginRight: '8px' }}
                         />
                     )}
                     {category.name}

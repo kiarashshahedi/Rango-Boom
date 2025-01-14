@@ -4,6 +4,7 @@ from .models import Product, Category
 
 class CategorySerializer(serializers.ModelSerializer):
     children = serializers.SerializerMethodField()
+    icon = serializers.SerializerMethodField()
 
     class Meta:
         model = Category
@@ -13,6 +14,11 @@ class CategorySerializer(serializers.ModelSerializer):
         children = obj.children.all()  # Get child categories
         return CategorySerializer(children, many=True).data
 
+    def get_icon(self, obj):
+        request = self.context.get('request')
+        if obj.icon and request:
+            return request.build_absolute_uri(obj.icon.url)
+        return None
 
 class ProductSerializer(serializers.ModelSerializer):
     category = CategorySerializer(read_only=True)
