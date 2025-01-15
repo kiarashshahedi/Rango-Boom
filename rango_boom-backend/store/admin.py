@@ -1,6 +1,8 @@
 from django.contrib import admin
 from .models import Category, Product
 from django.utils.safestring import mark_safe
+from mptt.admin import DraggableMPTTAdmin
+from django.utils.html import format_html  
 
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -12,10 +14,16 @@ class CategoryAdmin(admin.ModelAdmin):
 
     def icon_preview(self, obj):
         if obj.icon:
-            return mark_safe(f'<img src="{obj.icon.url}" style="width: 50px; height: 50px;" />')
+            return format_html(f'<img src="{obj.icon.url}" style="width: 50px; height: 50px;" />')
         return "No Icon"
 
     icon_preview.short_description = "Icon Preview"
+
+    def get_queryset(self, request):
+        """Customize queryset to order categories hierarchically."""
+        queryset = super().get_queryset(request)
+        return queryset.order_by('parent_category__id', 'name')
+
 
 class ProductAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', 'price', 'stock', 'category', 'created_at']
