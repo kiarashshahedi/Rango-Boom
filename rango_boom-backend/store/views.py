@@ -23,3 +23,9 @@ class ProductViewSet(viewsets.ModelViewSet):
         if category_id:
             queryset = queryset.filter(category_id=category_id)
         return queryset
+
+    def get_serializer_context(self):
+        """Pass request context to the serializer."""
+        context = super().get_serializer_context()
+        context['request'] = self.request
+        return context

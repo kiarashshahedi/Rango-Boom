@@ -43,11 +43,14 @@ const Products = () => {
                 {products.length > 0 ? (
                     products.map((product) => (
                         <div key={product.id} className="product-card">
-                            <img
-                                src={`http://127.0.0.1:8000${product.image}`}
-                                alt={product.name}
-                                className="product-image"
-                            />
+                            {product.image && (
+                                <img
+                                    src={product.image}
+                                    alt={product.name}
+                                    className=""
+                                    style={{ width: '150px', height: '150px', marginRight: '100px' }}
+                                />
+                            )}
                             <h2>{product.name}</h2>
                             <p>{product.description}</p>
                             <p>

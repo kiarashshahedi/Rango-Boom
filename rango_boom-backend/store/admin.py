@@ -26,10 +26,16 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'price', 'stock', 'category', 'created_at']
+    list_display = ['id', 'name', 'price', 'stock', 'category', 'image_preview', 'created_at',]
     list_filter = ['category']
     search_fields = ['name', 'description']
-    ordering = ['-created_at']
+    ordering = ['-created_at', 'category']
+
+    def image_preview(self, obj):
+        if obj.image:
+            return format_html(f'<img src="{obj.image.url}" style="width: 50px; height: 50px;" />')
+        return "No Product Image"
+    
 
 
 admin.site.register(Category, CategoryAdmin)
